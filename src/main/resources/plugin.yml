@@ -1,23 +1,38 @@
 name: ElegantWar
-version: '${project.version}'
+version: '1.0'
 main: com.embrodev.ElegantWar
 api-version: '1.21'
 
 commands:
   warpoint:
+    aliases:
+      - wp
     usage: /warpoint <count_dead> <team>
 
   setteam:
+    aliases:
+      - steam
     usage: /setteam <player> <team>
 
   listteam:
+    aliases:
+      - lteam
     usage: /listteam <team>
 
   setcommander:
+    aliases:
+      - scom
     usage: /setcommander <player> <team>
 
   listcommander:
+    aliases:
+      - lcom
     usage: /listcommander
 
   settactic:
+    aliases: stac
     usage: /settactic <tactic>
+
+  removeteam:
+    aliases: rteam
+    usage: /removeteam <player>

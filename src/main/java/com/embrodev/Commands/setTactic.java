@@ -38,7 +38,6 @@ public class setTactic implements CommandExecutor {
             } else if (player == defense_commander) {
                 for(Player target : defense){
                     setTactic(target, tactic);
-                    player.sendMessage("Тактика " + tactic + " установлена!");
                 }
             } else{
                 player.sendMessage("Вы не являетесь командиром!");
@@ -53,17 +52,25 @@ public class setTactic implements CommandExecutor {
         switch (tactic) {
             case "blitzkrieg":
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 600000, 1)); // Скорость II
+                player.sendMessage("Тактика blitzkrieg установлена!");
                 break;
             case "defense":
                 player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 600000, 1)); // Сопротивление II
+                player.sendMessage("Тактика defense установлена!");
                 break;
             case "offensive":
                 player.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 600000, 0)); // Сила I
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 600000, 0)); // Скорость I
+                player.sendMessage("Тактика offensive установлена!");
                 break;
             case "operational_interaction":
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 600000, 0)); // Скорость I
                 player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 600000, 0)); // Сопротивление I
+                player.sendMessage("Тактика operational_interaction установлена!");
+                break;
+            default:
+                player.sendMessage("Неверная тактика!");
+                player.sendMessage("Список существующих тактик: \n blitzkrieg - Скорость II \n defense - Сопротивление II \n offensive - Сила I, Скорость I \n operational_interaction - Скорость I, Сопротивление I");
                 break;
         }
 

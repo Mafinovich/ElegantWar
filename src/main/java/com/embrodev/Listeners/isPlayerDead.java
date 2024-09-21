@@ -16,7 +16,7 @@ public class isPlayerDead implements Listener {
         sumonnerUUID = event.getEntity().getUniqueId().toString();
         sumonner = event.getEntity();
         //Фикс двух сообщений о смерти
-        event.setDeathMessage(null);
+        //event.setDeathMessage(null);
 
         //Если такой UUID есть в словаре war_dict
         if (war_dict.containsKey(sumonnerUUID)) {

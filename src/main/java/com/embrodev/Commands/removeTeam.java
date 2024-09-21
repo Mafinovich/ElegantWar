@@ -23,6 +23,7 @@ public class removeTeam implements CommandExecutor {
             //Проверка на синтаксис
             if(args.length < 1) {
                 p.sendMessage("Укажите ник игрока");
+                return false;
             }
             if(p.hasPermission("elegantwar.removeteam")) {
                 //Если игрок найден в списке атакующих удаляем его
