@@ -12,3 +12,9 @@ commands:
 
   listteam:
     usage: /listteam <team>
+
+  setcommander:
+    usage: /setcommander <player> <team>
+
+  listcommander:
+    usage: /listcommander
