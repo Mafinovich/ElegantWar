@@ -1,23 +1,27 @@
 package com.embrodev;
 
 import com.embrodev.Commands.*;
+import com.embrodev.Completers.setTacticCompleter;
 import com.embrodev.Listeners.isPlayerDead;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Objects;
 
 public final class ElegantWar extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Objects.requireNonNull(this.getCommand("warpoint")).setExecutor(new Warpoint());
-        Objects.requireNonNull(this.getCommand("setteam")).setExecutor(new setTeam());
-        Objects.requireNonNull(this.getCommand("listteam")).setExecutor(new listTeam());
-        Objects.requireNonNull(this.getCommand("removeteam")).setExecutor(new removeTeam());
-        Objects.requireNonNull(this.getCommand("settactic")).setExecutor(new setTactic());
-        Objects.requireNonNull(this.getCommand("setcommander")).setExecutor(new setCommander());
-        Objects.requireNonNull(this.getCommand("listcommander")).setExecutor(new listCommander());
+        //Executors
+        this.getCommand("warpoint").setExecutor(new Warpoint());
+        this.getCommand("setteam").setExecutor(new setTeam());
+        this.getCommand("listteam").setExecutor(new listTeam());
+        this.getCommand("removeteam").setExecutor(new removeTeam());
+        this.getCommand("settactic").setExecutor(new setTactic());
+        this.getCommand("setcommander").setExecutor(new setCommander());
+        this.getCommand("listcommander").setExecutor(new listCommander());
 
+        //TabCompleters
+        this.getCommand("settactic").setTabCompleter(new setTacticCompleter());
+
+        //Events
         getServer().getPluginManager().registerEvents(new isPlayerDead(), this);
 
     }
