@@ -63,7 +63,7 @@ public class setTactic implements CommandExecutor {
                 player.sendMessage("Вы не являетесь командиром!");
                 return false;
             }
-            // счётчик использований + 1
+            //счётчик использований + 1
             tacticUseCount.put(player, currentCount + 1);
         }
         return true;
