@@ -18,10 +18,10 @@ import static com.embrodev.Commands.setTeam.defense;
 
 public class setTactic implements CommandExecutor {
 
-    // Словарь для хранения количества использований тактики для каждого правителя
+    //количество использований тактики для каждого правителя
     private static HashMap<Player, Integer> tacticUseCount = new HashMap<>();
 
-    // Максимальное количество тактик, которые можно выбрать
+    // Максимальное количество тактик
     private static final int MAX_TACTICS = 2;
 
     @Override
@@ -31,7 +31,7 @@ public class setTactic implements CommandExecutor {
         String tactic = args[0];
         String cmdName = command.getName().toLowerCase();
 
-        // Получаем количество использований для данного правителя
+        // Получаем количество использований этого правителя
         int currentCount = tacticUseCount.getOrDefault(player, 0);
 
         if (cmdName.equals("settactic")) {
@@ -63,7 +63,7 @@ public class setTactic implements CommandExecutor {
                 player.sendMessage("Вы не являетесь командиром!");
                 return false;
             }
-            // Увеличиваем счётчик использований на 1
+            // счётчик использований + 1
             tacticUseCount.put(player, currentCount + 1);
         }
         return true;
