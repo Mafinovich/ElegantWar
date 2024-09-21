@@ -1,0 +1,14 @@
+name: ElegantWar
+version: '${project.version}'
+main: com.embrodev.ElegantWar
+api-version: '1.21'
+
+commands:
+  warpoint:
+    usage: /warpoint <count_dead> <team>
+
+  setteam:
+    usage: /setteam <player> <team>
+
+  listteam:
+    usage: /listteam <team>
