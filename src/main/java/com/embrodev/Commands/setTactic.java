@@ -9,12 +9,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.HashMap;
+
 import static com.embrodev.Commands.setCommander.attack_commander;
 import static com.embrodev.Commands.setCommander.defense_commander;
 import static com.embrodev.Commands.setTeam.attack;
 import static com.embrodev.Commands.setTeam.defense;
 
 public class setTactic implements CommandExecutor {
+
+    // Словарь для хранения количества использований тактики для каждого правителя
+    private static HashMap<Player, Integer> tacticUseCount = new HashMap<>();
+
+    // Максимальное количество тактик, которые можно выбрать
+    private static final int MAX_TACTICS = 2;
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) return false;
@@ -22,27 +31,40 @@ public class setTactic implements CommandExecutor {
         String tactic = args[0];
         String cmdName = command.getName().toLowerCase();
 
-        if(cmdName.equals("settactic")) {
+        // Получаем количество использований для данного правителя
+        int currentCount = tacticUseCount.getOrDefault(player, 0);
+
+        if (cmdName.equals("settactic")) {
             // Проверка аргументов
             if (args.length < 1) {
                 player.sendMessage("Пожалуйста, укажите тактику");
                 player.sendMessage("Список существующих тактик: \n blitzkrieg - Скорость II \n defense - Сопротивление II \n offensive - Сила I, Скорость I \n operational_interaction - Скорость I, Сопротивление I");
                 return false;
             }
-            if(player == attack_commander) {
-                // Вызов метода установки тактики
-                for(Player target : attack) {
-                    setTactic(target, tactic);
-                    player.sendMessage("Тактика " + tactic + " установлена!");
+            if (player == attack_commander) {
+                if (currentCount >= MAX_TACTICS) {
+                    player.sendMessage("Вы достигли максимального лимита выбора тактики (" + MAX_TACTICS + ")!");
+                } else {
+                    // Вызов метода установки тактики
+                    for (Player target : attack) {
+                        setTactic(target, tactic);
+                        player.sendMessage("Тактика " + tactic + " установлена!");
+                    }
                 }
             } else if (player == defense_commander) {
-                for(Player target : defense){
-                    setTactic(target, tactic);
+                if (currentCount >= MAX_TACTICS) {
+                    player.sendMessage("Вы достигли максимального лимита выбора тактики (" + MAX_TACTICS + ")!");
+                } else {
+                    for (Player target : defense) {
+                        setTactic(target, tactic);
+                    }
                 }
-            } else{
+            } else {
                 player.sendMessage("Вы не являетесь командиром!");
                 return false;
             }
+            // Увеличиваем счётчик использований на 1
+            tacticUseCount.put(player, currentCount + 1);
         }
         return true;
     }
