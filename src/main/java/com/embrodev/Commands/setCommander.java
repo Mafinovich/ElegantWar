@@ -27,15 +27,21 @@ public class setCommander implements CommandExecutor {
             } else if (!(args[1].equals("attack") || args[1].equals("defense") )) {
                 p.sendMessage("Укажите команду в правильном формате!(attack, defense)");
                 return false;
+            } else if (target == null) {
+                p.sendMessage("Игрок не обнаружен");
+                return false;
             }
 
             if(p.hasPermission("elegantwar.setcommander")){
                 if(args[1].equals("attack")) {
                     attack_commander = target;
                     p.sendMessage("Игрок " + target + " назначен командиром атакующей стороны!");
+                    target.sendMessage("Вы назначены командиром атакующей стороны!");
+
                 } else{
                     defense_commander = target;
                     p.sendMessage("Игрок " + target + "назначен командиром стороны защиты!");
+                    target.sendMessage("Вы назначены командиром стороны защиты!");
                 }
             }
         }
