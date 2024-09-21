@@ -12,8 +12,8 @@ public final class ElegantWar extends JavaPlugin {
         this.getCommand("setteam").setExecutor(new setTeam());
         this.getCommand("listteam").setExecutor(new listTeam());
         this.getCommand("removeteam").setExecutor(new removeTeam());
-        this.getCommand("setcommander").setExecutor(new setCommander());
-        this.getCommand("listcommander").setExecutor(new listCommander());
+        this.getCommand("settactic").setExecutor(new setTacticCommandExecutor());
+
 
         getServer().getPluginManager().registerEvents(new isPlayerDead(), this);
 
