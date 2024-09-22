@@ -28,10 +28,9 @@ public class isPlayerDead implements Listener {
         if (war_dict.containsKey(sumonnerUUID)) {
             //Замена количества жизней по ключу UUID на -1
             war_dict.replace(sumonnerUUID, war_dict.get(sumonnerUUID) - 1);
-            sumonner.sendMessage(war_dict.get(sumonnerUUID) + " жизней осталось");
             //хз добавил для удобства
             if (war_dict.get(sumonnerUUID) > 0){
-                Bukkit.broadcastMessage(ChatColor.DARK_AQUA +"У "+ sumonner.getName() + " жизней осталось:"+war_dict.get(sumonnerUUID));
+                Bukkit.broadcastMessage(ChatColor.DARK_AQUA +"У "+ sumonner.getName() + " осталось "+war_dict.get(sumonnerUUID) + " жизней");
             }
 
             if (attack.contains(sumonner)) {
@@ -48,7 +47,6 @@ public class isPlayerDead implements Listener {
             if (war_dict.get(sumonnerUUID) <= 0) {
                 //Назначаем спавнпоинт по сохраненному значению перед установкой варпоинта
                 sumonner.setRespawnLocation(spawnpoint_dict.get(sumonnerUUID), true);
-                sumonner.sendMessage("Вы выбываете из битвы.");
                 Bukkit.broadcastMessage(ChatColor.GOLD + sumonner.getName() + " выбывает из команды и покидает битву!");
                 //Удаляем участника из команды
                 war_dict.remove(sumonnerUUID);

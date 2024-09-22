@@ -13,38 +13,36 @@ public class setCommander implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player p = (Player) sender;
-        String cmdName = command.getName().toLowerCase();
         Player target = Bukkit.getPlayerExact(args[0]);
 
 
-        if(cmdName.equals("setcommander")){
-            if(args.length < 1){
-                p.sendMessage("Укажите ник командира и команду(attack, defense)");
-                return false;
-            } else if (args.length == 1) {
-                p.sendMessage("Укажите команду(attack, defense)");
-                return false;
-            } else if (!(args[1].equals("attack") || args[1].equals("defense") )) {
-                p.sendMessage("Укажите команду в правильном формате!(attack, defense)");
-                return false;
-            } else if (target == null) {
-                p.sendMessage("Игрок не обнаружен");
-                return false;
-            }
+        if(args.length < 1){
+            p.sendMessage("Укажите ник командира и команду(attack, defense)");
+            return false;
+        } else if (args.length == 1) {
+            p.sendMessage("Укажите команду(attack, defense)");
+            return false;
+        } else if (!(args[1].equals("attack") || args[1].equals("defense") )) {
+            p.sendMessage("Укажите команду в правильном формате!(attack, defense)");
+            return false;
+        } else if (target == null) {
+            p.sendMessage("Игрок не обнаружен");
+            return false;
+        }
 
-            if(p.hasPermission("elegantwar.setcommander")){
-                if(args[1].equals("attack")) {
-                    attack_commander = target;
-                    p.sendMessage("Игрок " + target + " назначен командиром атакующей стороны!");
-                    target.sendMessage("Вы назначены командиром атакующей стороны!");
+        if(p.hasPermission("elegantwar.setcommander")){
+            if(args[1].equals("attack")) {
+                attack_commander = target;
+                p.sendMessage("Игрок " + target + " назначен командиром атакующей стороны!");
+                target.sendMessage("Вы назначены командиром атакующей стороны!");
 
-                } else{
-                    defense_commander = target;
-                    p.sendMessage("Игрок " + target + "назначен командиром стороны защиты!");
-                    target.sendMessage("Вы назначены командиром стороны защиты!");
-                }
+            } else{
+                defense_commander = target;
+                p.sendMessage("Игрок " + target + "назначен командиром стороны защиты!");
+                target.sendMessage("Вы назначены командиром стороны защиты!");
             }
         }
+
 
         return true;
     }

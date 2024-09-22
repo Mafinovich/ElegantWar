@@ -29,43 +29,41 @@ public class setTactic implements CommandExecutor {
         if (!(sender instanceof Player)) return false;
         Player player = (Player) sender;
         String tactic = args[0];
-        String cmdName = command.getName().toLowerCase();
 
         // Получаем количество использований этого правителя
         int currentCount = tacticUseCount.getOrDefault(player, 0);
 
-        if (cmdName.equals("settactic")) {
-            // Проверка аргументов
-            if (args.length < 1) {
-                player.sendMessage("Пожалуйста, укажите тактику");
-                player.sendMessage("Список существующих тактик: \n blitzkrieg - Скорость II \n defense - Сопротивление II \n offensive - Сила I, Скорость I \n operational_interaction - Скорость I, Сопротивление I");
-                return false;
-            }
-            if (player == attack_commander) {
-                if (currentCount >= MAX_TACTICS) {
-                    player.sendMessage("Вы достигли максимального лимита выбора тактики (" + MAX_TACTICS + ")!");
-                } else {
-                    // Вызов метода установки тактики
-                    for (Player target : attack) {
-                        setTactic(target, tactic);
-                        player.sendMessage("Тактика " + tactic + " установлена!");
-                    }
-                }
-            } else if (player == defense_commander) {
-                if (currentCount >= MAX_TACTICS) {
-                    player.sendMessage("Вы достигли максимального лимита выбора тактики (" + MAX_TACTICS + ")!");
-                } else {
-                    for (Player target : defense) {
-                        setTactic(target, tactic);
-                    }
-                }
-            } else {
-                player.sendMessage("Вы не являетесь командиром!");
-                return false;
-            }
-            //счётчик использований + 1
-            tacticUseCount.put(player, currentCount + 1);
+        // Проверка аргументов
+        if (args.length < 1) {
+            player.sendMessage("Пожалуйста, укажите тактику");
+            player.sendMessage("Список существующих тактик: \n blitzkrieg - Скорость II \n defense - Сопротивление II \n offensive - Сила I, Скорость I \n operational_interaction - Скорость I, Сопротивление I");
+            return false;
         }
+        if (player == attack_commander) {
+            if (currentCount >= MAX_TACTICS) {
+                player.sendMessage("Вы достигли максимального лимита выбора тактики (" + MAX_TACTICS + ")!");
+            } else {
+                // Вызов метода установки тактики
+                for (Player target : attack) {
+                    setTactic(target, tactic);
+                    player.sendMessage("Тактика " + tactic + " установлена!");
+                }
+            }
+        } else if (player == defense_commander) {
+            if (currentCount >= MAX_TACTICS) {
+                player.sendMessage("Вы достигли максимального лимита выбора тактики (" + MAX_TACTICS + ")!");
+            } else {
+                for (Player target : defense) {
+                    setTactic(target, tactic);
+                }
+            }
+        } else {
+            player.sendMessage("Вы не являетесь командиром!");
+            return false;
+        }
+        //счётчик использований + 1
+        tacticUseCount.put(player, currentCount + 1);
+
         return true;
     }
 
