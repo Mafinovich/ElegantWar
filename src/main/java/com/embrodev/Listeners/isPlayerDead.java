@@ -1,12 +1,14 @@
 package com.embrodev.Listeners;
 
 import com.embrodev.Commands.TeamTactics;
+import com.embrodev.ElegantWar;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 import static com.embrodev.Commands.Warpoint.*;
 import static com.embrodev.Commands.setTactic.setTactic;
@@ -33,16 +35,6 @@ public class isPlayerDead implements Listener {
                 Bukkit.broadcastMessage(ChatColor.DARK_AQUA +"У "+ sumonner.getName() + " осталось "+war_dict.get(sumonnerUUID) + " жизней");
             }
 
-            if (attack.contains(sumonner)) {
-                String tactic = TeamTactics.getTeamTactic("attack");
-                setTactic(sumonner, tactic);
-                sumonner.sendMessage("Применена тактика: " + tactic);
-            } else if (defense.contains(sumonner)) {
-                String tactic = TeamTactics.getTeamTactic("defense");
-                setTactic(sumonner, tactic);
-                sumonner.sendMessage("Применена тактика: " + tactic);
-            }
-
             //Если жизни закончились
             if (war_dict.get(sumonnerUUID) <= 0) {
                 //Назначаем спавнпоинт по сохраненному значению перед установкой варпоинта
@@ -52,5 +44,22 @@ public class isPlayerDead implements Listener {
                 war_dict.remove(sumonnerUUID);
             }
         }
+    }
+    @EventHandler
+    public void onPlayerRespawn(PlayerRespawnEvent event){
+        sumonnerUUID = event.getPlayer().getUniqueId().toString();
+        sumonner = event.getPlayer();
+        // Запускаем отложенное выполнение через 2 секунды (40 тиков)
+        Bukkit.getScheduler().runTaskLater(ElegantWar.getInstance(), () -> {
+            if (war_dict.containsKey(sumonnerUUID)) {
+                if (attack.contains(sumonner)) {
+                    String tactic = TeamTactics.getTeamTactic("attack");
+                    setTactic(sumonner, tactic);
+                } else if (defense.contains(sumonner)) {
+                    String tactic = TeamTactics.getTeamTactic("defense");
+                    setTactic(sumonner, tactic);
+                }
+            }
+        }, 40L); // 40 тиков = 2 секунды
     }
 }

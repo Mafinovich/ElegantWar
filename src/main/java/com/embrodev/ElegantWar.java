@@ -6,9 +6,12 @@ import com.embrodev.Listeners.isPlayerDead;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ElegantWar extends JavaPlugin {
+    private static ElegantWar instance;
 
     @Override
     public void onEnable() {
+        instance = this;
+
         //Executors
         this.getCommand("warpoint").setExecutor(new Warpoint());
         this.getCommand("setteam").setExecutor(new setTeam());
@@ -28,5 +31,8 @@ public final class ElegantWar extends JavaPlugin {
         //Events
         getServer().getPluginManager().registerEvents(new isPlayerDead(), this);
 
+    }
+    public static ElegantWar getInstance() {
+        return instance;
     }
 }

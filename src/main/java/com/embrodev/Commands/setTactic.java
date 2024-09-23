@@ -11,6 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 
+import static com.embrodev.Commands.TeamTactics.setTeamTactic;
 import static com.embrodev.Commands.setCommander.attack_commander;
 import static com.embrodev.Commands.setCommander.defense_commander;
 import static com.embrodev.Commands.setTeam.attack;
@@ -46,7 +47,7 @@ public class setTactic implements CommandExecutor {
                 // Вызов метода установки тактики
                 for (Player target : attack) {
                     setTactic(target, tactic);
-                    player.sendMessage("Тактика " + tactic + " установлена!");
+                    setTeamTactic("attack", tactic);
                 }
             }
         } else if (player == defense_commander) {
@@ -55,6 +56,7 @@ public class setTactic implements CommandExecutor {
             } else {
                 for (Player target : defense) {
                     setTactic(target, tactic);
+                    setTeamTactic("defense", tactic);
                 }
             }
         } else {
