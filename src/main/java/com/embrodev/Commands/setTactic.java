@@ -1,10 +1,12 @@
 package com.embrodev.Commands;
 
 
+import com.embrodev.ElegantWar;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -18,12 +20,14 @@ import static com.embrodev.Commands.setTeam.attack;
 import static com.embrodev.Commands.setTeam.defense;
 
 public class setTactic implements CommandExecutor {
+    //Подтягиваем конфиг
+    private static FileConfiguration config = ElegantWar.getInstance().getConfig();
 
     //количество использований тактики для каждого правителя
     private static HashMap<Player, Integer> tacticUseCount = new HashMap<>();
 
     // Максимальное количество тактик
-    private static final int MAX_TACTICS = 2;
+    private static final int MAX_TACTICS = config.getInt("tactic-limit");
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -71,7 +75,10 @@ public class setTactic implements CommandExecutor {
 
     // Метод для установки тактики
     public static void setTactic(Player player, String tactic) {
-        switch (tactic) {
+        for (PotionEffect effect : player.getActivePotionEffects()) {
+            player.removePotionEffect(effect.getType());
+        }
+            switch (tactic) {
             case "blitzkrieg":
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 600000, 1)); // Скорость II
                 player.sendMessage("Тактика blitzkrieg установлена!");

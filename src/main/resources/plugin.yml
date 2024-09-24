@@ -4,6 +4,11 @@ main: com.embrodev.ElegantWar
 api-version: '1.21'
 
 commands:
+  elegantwar:
+    aliases:
+      - ew
+    usage: /elegantwar <value>
+
   warpoint:
     aliases:
       - wp

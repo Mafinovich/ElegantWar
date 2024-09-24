@@ -12,6 +12,9 @@ public final class ElegantWar extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
+
         //Executors
         this.getCommand("warpoint").setExecutor(new Warpoint());
         this.getCommand("setteam").setExecutor(new setTeam());
@@ -20,6 +23,7 @@ public final class ElegantWar extends JavaPlugin {
         this.getCommand("settactic").setExecutor(new setTactic());
         this.getCommand("setcommander").setExecutor(new setCommander());
         this.getCommand("listcommander").setExecutor(new listCommander());
+        this.getCommand("elegantwar").setExecutor(new MainCommand());
 
         //TabCompleters
         this.getCommand("settactic").setTabCompleter(new setTacticCompleter());
@@ -27,6 +31,7 @@ public final class ElegantWar extends JavaPlugin {
         this.getCommand("setteam").setTabCompleter(new setTeamCompleter());
         this.getCommand("listteam").setTabCompleter(new listTeamCompleter());
         this.getCommand("setcommander").setTabCompleter(new setCommanderCompleter());
+        this.getCommand("elegantwar").setTabCompleter(new MainCommandCompleter());
 
         //Events
         getServer().getPluginManager().registerEvents(new isPlayerDead(), this);

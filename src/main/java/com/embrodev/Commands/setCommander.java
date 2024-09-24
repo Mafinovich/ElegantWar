@@ -1,10 +1,14 @@
 package com.embrodev.Commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static com.embrodev.Commands.setTeam.attack;
+import static com.embrodev.Commands.setTeam.defense;
 
 public class setCommander implements CommandExecutor {
     public static Player attack_commander;
@@ -13,7 +17,7 @@ public class setCommander implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player p = (Player) sender;
-        Player target = Bukkit.getPlayerExact(args[0]);
+        Player target = Bukkit.getPlayer(args[0]);
 
 
         if(args.length < 1){
@@ -31,15 +35,15 @@ public class setCommander implements CommandExecutor {
         }
 
         if(p.hasPermission("elegantwar.setcommander")){
-            if(args[1].equals("attack")) {
+            if(args[1].equals("attack") && attack.contains(target)) {
                 attack_commander = target;
-                p.sendMessage("Игрок " + target + " назначен командиром атакующей стороны!");
-                target.sendMessage("Вы назначены командиром атакующей стороны!");
+                p.sendMessage(ChatColor.GOLD + target.getName() + " назначен командиром атакующей стороны!");
 
-            } else{
+            } else if(args[1].equals("defense") && defense.contains(target)){
                 defense_commander = target;
-                p.sendMessage("Игрок " + target + "назначен командиром стороны защиты!");
-                target.sendMessage("Вы назначены командиром стороны защиты!");
+                p.sendMessage(ChatColor.GOLD + "Игрок " + target.getName() + " назначен командиром стороны защиты!");
+            } else{
+                p.sendMessage(ChatColor.RED +"Неверная команда или игрок не состоит в данной команде!");
             }
         }
 

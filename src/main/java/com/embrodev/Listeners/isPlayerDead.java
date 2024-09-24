@@ -4,6 +4,7 @@ import com.embrodev.Commands.TeamTactics;
 import com.embrodev.ElegantWar;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +17,9 @@ import static com.embrodev.Commands.setTeam.attack;
 import static com.embrodev.Commands.setTeam.defense;
 
 public class isPlayerDead implements Listener {
+    //Подтягиваем конфиг
+    private static FileConfiguration config = ElegantWar.getInstance().getConfig();
+
     String sumonnerUUID;
     Player sumonner;
 
@@ -49,7 +53,11 @@ public class isPlayerDead implements Listener {
     public void onPlayerRespawn(PlayerRespawnEvent event){
         sumonnerUUID = event.getPlayer().getUniqueId().toString();
         sumonner = event.getPlayer();
-        // Запускаем отложенное выполнение через 2 секунды (40 тиков)
+
+        //Получаем задержку из конфига
+        int delay = config.getInt("rebirth-tactic-interval");
+
+        // Запускаем отложенное выполнение
         Bukkit.getScheduler().runTaskLater(ElegantWar.getInstance(), () -> {
             if (war_dict.containsKey(sumonnerUUID)) {
                 if (attack.contains(sumonner)) {
@@ -60,6 +68,6 @@ public class isPlayerDead implements Listener {
                     setTactic(sumonner, tactic);
                 }
             }
-        }, 40L); // 40 тиков = 2 секунды
+        }, delay);
     }
 }
