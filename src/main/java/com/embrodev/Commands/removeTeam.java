@@ -3,17 +3,24 @@ package com.embrodev.Commands;
 import com.embrodev.ElegantWar;
 import com.embrodev.Managers.ConfigManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 //Импорт списков игроков с обеих команд
+import java.util.ArrayList;
+
 import static com.embrodev.Commands.setTeam.attack;
 import static com.embrodev.Commands.setTeam.defense;
 import static com.embrodev.Managers.ConfigManager.updateConfigWithTeams;
 
 public class removeTeam implements CommandExecutor {
+    private Scoreboard scoreboard;
+    private Player target;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -21,8 +28,9 @@ public class removeTeam implements CommandExecutor {
         ConfigManager configManager = plugin.getConfigManager();
 
         Player p = (Player) sender;
-        Player target = Bukkit.getPlayerExact(args[0]);
+        target = Bukkit.getPlayerExact(args[0]);
         String targetName = target.getName();
+        scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 
 
         //Проверка на синтаксис
@@ -32,32 +40,28 @@ public class removeTeam implements CommandExecutor {
                 return false;
             }
             if(args[0].equals("attack")){
-                attack.clear();
-                updateConfigWithTeams();
+                removePlayerTeam("attack", attack, true);
 
                 p.sendMessage("Команда атакующих была удалена");
             } else if (args[0].equals("defense")) {
-                defense.clear();
-                updateConfigWithTeams();
+                removePlayerTeam("defense", defense, true);
 
                 p.sendMessage("Команда защиты была удалена");
             } else {
                 //Если игрок найден в списке атакующих удаляем его
                 if (attack.contains(targetName)) {
-                    attack.remove(targetName);
-                    updateConfigWithTeams();
+                    removePlayerTeam("attack", attack, false);
 
                     p.sendMessage("Игрок " + targetName + " удален из команды атакующих");
                     //Если игрок найден в списке защиты тоже удаляем
                 } else if (defense.contains(targetName)) {
-                    defense.remove(targetName);
-                    updateConfigWithTeams();
+                    removePlayerTeam("defense", defense, false);
 
                     p.sendMessage("Игрок " + targetName + " удален из команды защиты");
 
                     //Если игрока нет в списках выдаем ошибку
                 } else {
-                    p.sendMessage("Игрок не существует или не состоит в команде");
+                    p.sendMessage(ChatColor.RED + "Игрок не существует или не состоит в команде");
                     return false;
                 }
             }
@@ -65,5 +69,24 @@ public class removeTeam implements CommandExecutor {
         }
 
         return true;
+    }
+    private void removePlayerTeam(String teamName, ArrayList<String> teamList, boolean AllTeam){
+        Team team = scoreboard.getTeam(teamName);
+
+        if(team == null){
+            team = scoreboard.registerNewTeam(teamName);
+            team.setAllowFriendlyFire(false);
+        }
+
+        if(AllTeam){
+            for(String targetName : teamList){
+                team.removeEntry(targetName);
+            }
+            teamList.clear();
+        } else{
+            team.removeEntry(target.getName());
+            teamList.remove(target);
+        }
+        updateConfigWithTeams();
     }
 }
