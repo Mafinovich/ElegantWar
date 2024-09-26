@@ -11,8 +11,8 @@ import static com.embrodev.Commands.setTeam.attack;
 import static com.embrodev.Commands.setTeam.defense;
 
 public class setCommander implements CommandExecutor {
-    public static Player attack_commander;
-    public static Player defense_commander;
+    public static String attack_commander;
+    public static String defense_commander;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -35,12 +35,12 @@ public class setCommander implements CommandExecutor {
         }
 
         if(p.hasPermission("elegantwar.setcommander")){
-            if(args[1].equals("attack") && attack.contains(target)) {
-                attack_commander = target;
+            if(args[1].equals("attack") && attack.contains(target.getName())) {
+                attack_commander = target.getName();
                 p.sendMessage(ChatColor.GOLD + target.getName() + " назначен командиром атакующей стороны!");
 
-            } else if(args[1].equals("defense") && defense.contains(target)){
-                defense_commander = target;
+            } else if(args[1].equals("defense") && defense.contains(target.getName())){
+                defense_commander = target.getName();
                 p.sendMessage(ChatColor.GOLD + "Игрок " + target.getName() + " назначен командиром стороны защиты!");
             } else{
                 p.sendMessage(ChatColor.RED +"Неверная команда или игрок не состоит в данной команде!");

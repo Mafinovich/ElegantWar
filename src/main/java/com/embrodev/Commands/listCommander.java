@@ -15,7 +15,7 @@ public class listCommander implements CommandExecutor {
         Player p = (Player) sender;
 
         if(!(attack_commander == null) && !(defense_commander == null)) {
-            p.sendMessage("Командир атаки: " + attack_commander.getName() + "\nКомандир обороны: " + defense_commander.getName());
+            p.sendMessage("Командир атаки: " + attack_commander + "\nКомандир обороны: " + defense_commander);
         } else{
             p.sendMessage("Командиры еще не назначены");
         }

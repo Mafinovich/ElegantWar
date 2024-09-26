@@ -29,20 +29,10 @@ public class listTeam implements CommandExecutor {
 
         //Вывод ников участников команды атаки. Список attackNames нужен, поскольку список attack является типом Player, и не может быть выведен через String.join
         if(args[0].equals("attack")){
-            ArrayList<String> attackNames = new ArrayList<String>();
-            //Получаем String значения ников из списка attack и записываем в attackNames
-            for (int i = 0; i < attack.size(); i++) {
-                attackNames.add(attack.get(i).getName());
-            }
             //Выводим список attackNames, чередуя каждый ник через запятую
-            p.sendMessage(String.join(", ", attackNames));
+            p.sendMessage(String.join(", ", attack));
         } else{
-            //Аналогично с прошлым пояснением
-            ArrayList<String> defenseNames = new ArrayList<String>();
-            for (int i = 0; i < defense.size(); i++) {
-                defenseNames.add(defense.get(i).getName());
-            }
-            p.sendMessage(String.join(", ", defenseNames));
+            p.sendMessage(String.join(", ", defense));
         }
 
 

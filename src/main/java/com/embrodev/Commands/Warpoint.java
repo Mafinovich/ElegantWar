@@ -1,6 +1,8 @@
 package com.embrodev.Commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -50,7 +52,8 @@ public class Warpoint implements CommandExecutor {
         //Назначение варпоинта для атаки
         if(args1.equals("attack")){
             //Цикл для перебора участников стороны атаки
-            for(Player target : attack){
+            for(String targetName : attack){
+                Player target = Bukkit.getPlayer(targetName);
                 //Проверка онлайн ли игрок
                 if(target.isOnline()) {
                     if(p.hasPermission("elegantwar.warpoint")) {
@@ -77,9 +80,11 @@ public class Warpoint implements CommandExecutor {
           //Назначение варпоинта для защиты
         } else if (args1.equals("defense")) {
             //Цикл для перебора участников стороны защиты
-            for (Player target : defense) {
+            for (String targetName : defense) {
+                OfflinePlayer targetOffline = Bukkit.getOfflinePlayer(targetName);
                 //Проверка онлайн ли игрок
-                if(target.isOnline()) {
+                if(targetOffline.isOnline()) {
+                    Player target = Bukkit.getPlayer(targetOffline.getName());
                     if(p.hasPermission("nnna.warpoint")) {
                         //Проверка на минимальное количество жизней
                         if(CountDeadValue >= 2) {
@@ -97,8 +102,8 @@ public class Warpoint implements CommandExecutor {
                     }
                 } else{
                     //Если игрок не в сети удаляем из списка участников команды
-                    defense.remove(target);
-                    p.sendMessage("Участник " + target.getName() + " был удален из команды атакующих, поскольку не в сети");
+                    defense.remove(targetOffline.getName());
+                    p.sendMessage("Участник " + targetName + " был удален из команды атакующих, поскольку не в сети");
                 }
             }
         }

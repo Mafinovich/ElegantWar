@@ -60,10 +60,10 @@ public class isPlayerDead implements Listener {
         // Запускаем отложенное выполнение
         Bukkit.getScheduler().runTaskLater(ElegantWar.getInstance(), () -> {
             if (war_dict.containsKey(sumonnerUUID)) {
-                if (attack.contains(sumonner)) {
+                if (attack.contains(sumonner.getName())) {
                     String tactic = TeamTactics.getTeamTactic("attack");
                     setTactic(sumonner, tactic);
-                } else if (defense.contains(sumonner)) {
+                } else if (defense.contains(sumonner.getName())) {
                     String tactic = TeamTactics.getTeamTactic("defense");
                     setTactic(sumonner, tactic);
                 }

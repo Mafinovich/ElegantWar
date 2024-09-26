@@ -1,5 +1,7 @@
 package com.embrodev.Commands;
 
+import com.embrodev.ElegantWar;
+import com.embrodev.Managers.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -7,11 +9,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+import static com.embrodev.Managers.ConfigManager.updateConfigWithTeams;
 
 public class setTeam implements CommandExecutor {
     //Создание списков для хранения всех участников команды
-    public static ArrayList<Player> attack = new ArrayList<Player>();
-    public static ArrayList<Player> defense = new ArrayList<Player>();
+    public static ArrayList<String> attack = new ArrayList<String>();
+    public static ArrayList<String> defense = new ArrayList<String>();
 
     private Player p;
 
@@ -48,12 +53,16 @@ public class setTeam implements CommandExecutor {
 
             //Проверяем нет ли игрока в списках и проверяем тип команды
             if (args1.equals("attack") && !attack.contains(target) && !defense.contains(target)) {
-                attack.add(target);
+                attack.add(target.getName());
                 p.sendMessage("Игрок " + args0 + " добавлен в команду атакующих");
+
+                updateConfigWithTeams();
             //Проверяем нет ли игрока в списках и проверяем тип команды
             } else if (args1.equals("defense") && !attack.contains(target) && !defense.contains(target)) {
-                defense.add(target);
+                defense.add(target.getName());
                 p.sendMessage("Игрок " + args0 + " добавлен в команду защиты");
+
+                updateConfigWithTeams();
             } else{
                 p.sendMessage("Данный игрок уже состоит в команде!");
             }
@@ -62,7 +71,7 @@ public class setTeam implements CommandExecutor {
 
 
     return true;
-}
+    }
 
 
 }

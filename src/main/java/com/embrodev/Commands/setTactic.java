@@ -2,7 +2,9 @@ package com.embrodev.Commands;
 
 
 import com.embrodev.ElegantWar;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -44,23 +46,31 @@ public class setTactic implements CommandExecutor {
             player.sendMessage("Список существующих тактик: \n blitzkrieg - Скорость II \n defense - Сопротивление II \n offensive - Сила I, Скорость I \n operational_interaction - Скорость I, Сопротивление I");
             return false;
         }
-        if (player == attack_commander) {
+        if (player.getName().equals(attack_commander)) {
             if (currentCount >= MAX_TACTICS) {
                 player.sendMessage("Вы достигли максимального лимита выбора тактики (" + MAX_TACTICS + ")!");
             } else {
                 // Вызов метода установки тактики
-                for (Player target : attack) {
-                    setTactic(target, tactic);
-                    setTeamTactic("attack", tactic);
+                for (String targetName : attack) {
+                    OfflinePlayer targetOffline = Bukkit.getOfflinePlayer(targetName);
+                    if(targetOffline.isOnline()) {
+                        Player target = Bukkit.getPlayer(targetOffline.getName());
+                        setTactic(target, tactic);
+                        setTeamTactic("defense", tactic);
+                    }
                 }
             }
-        } else if (player == defense_commander) {
+        } else if (player.getName().equals(defense_commander)) {
             if (currentCount >= MAX_TACTICS) {
                 player.sendMessage("Вы достигли максимального лимита выбора тактики (" + MAX_TACTICS + ")!");
             } else {
-                for (Player target : defense) {
-                    setTactic(target, tactic);
-                    setTeamTactic("defense", tactic);
+                for (String targetName : defense) {
+                    OfflinePlayer targetOffline = Bukkit.getOfflinePlayer(targetName);
+                    if(targetOffline.isOnline()) {
+                        Player target = Bukkit.getPlayer(targetOffline.getName());
+                        setTactic(target, tactic);
+                        setTeamTactic("defense", tactic);
+                    }
                 }
             }
         } else {
