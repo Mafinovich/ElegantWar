@@ -27,23 +27,25 @@ public class setCommander implements CommandExecutor {
             p.sendMessage("Укажите команду(attack, defense)");
             return false;
         } else if (!(args[1].equals("attack") || args[1].equals("defense") )) {
-            p.sendMessage("Укажите команду в правильном формате!(attack, defense)");
+            p.sendMessage(ChatColor.DARK_RED + "Укажите команду в правильном формате!(attack, defense)");
             return false;
         } else if (target == null) {
-            p.sendMessage("Игрок не обнаружен");
+            p.sendMessage(ChatColor.DARK_RED + "Игрок не обнаружен");
             return false;
         }
 
         if(p.hasPermission("elegantwar.setcommander")){
             if(args[1].equals("attack") && attack.contains(target.getName())) {
                 attack_commander = target.getName();
-                p.sendMessage(ChatColor.GOLD + target.getName() + " назначен командиром атакующей стороны!");
+                p.sendMessage(ChatColor.GREEN + target.getName() + " назначен командиром атакующей стороны!");
+                target.sendMessage(ChatColor.GREEN + "Вас назначали командиром стороны атаки");
 
             } else if(args[1].equals("defense") && defense.contains(target.getName())){
                 defense_commander = target.getName();
-                p.sendMessage(ChatColor.GOLD + "Игрок " + target.getName() + " назначен командиром стороны защиты!");
+                p.sendMessage(ChatColor.GREEN + "Игрок " + target.getName() + " назначен командиром стороны защиты!");
+                target.sendMessage(ChatColor.GREEN + "Вас назначали командиром стороны защиты");
             } else{
-                p.sendMessage(ChatColor.RED +"Неверная команда или игрок не состоит в данной команде!");
+                p.sendMessage(ChatColor.DARK_RED +"Неверная команда или игрок не состоит в данной команде!");
             }
         }
 

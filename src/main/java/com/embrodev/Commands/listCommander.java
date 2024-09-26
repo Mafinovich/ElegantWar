@@ -1,5 +1,6 @@
 package com.embrodev.Commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,9 +16,9 @@ public class listCommander implements CommandExecutor {
         Player p = (Player) sender;
 
         if(!(attack_commander == null) && !(defense_commander == null)) {
-            p.sendMessage("Командир атаки: " + attack_commander + "\nКомандир обороны: " + defense_commander);
+            p.sendMessage(ChatColor.GOLD + "Командир атаки: " + attack_commander + "\nКомандир обороны: " + defense_commander);
         } else{
-            p.sendMessage("Командиры еще не назначены");
+            p.sendMessage(ChatColor.GOLD + "Командиры еще не назначены");
         }
 
         return true;

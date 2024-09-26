@@ -1,6 +1,7 @@
 package com.embrodev.Commands;
 
 import com.embrodev.ElegantWar;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,7 +16,7 @@ public class MainCommand implements CommandExecutor {
         Player p = (Player) sender;
         if(args[0].equals("reload")){
             ElegantWar.getInstance().reloadConfig();
-            p.sendMessage("Конфигурация плагина перезагружена!");
+            p.sendMessage(ChatColor.AQUA + "Конфигурация плагина перезагружена!");
         } else if (args[0].equals("show-config")) {
             FileConfiguration config = ElegantWar.getInstance().getConfig();
 
@@ -28,7 +29,7 @@ public class MainCommand implements CommandExecutor {
                 p.sendMessage(i + "");
             }
         } else{
-            p.sendMessage("Введите корректное значение!");
+            p.sendMessage(ChatColor.DARK_RED + "Введите корректное значение!");
             return false;
         }
         return true;

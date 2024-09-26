@@ -1,5 +1,6 @@
 package com.embrodev.Commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,10 +21,10 @@ public class listTeam implements CommandExecutor {
 
         //Проверка на синтаксис
         if(args.length < 1){
-            p.sendMessage("Пожалуйста, введите команду");
+            p.sendMessage(ChatColor.DARK_RED + "Пожалуйста, введите команду");
             return false;
         } else if (!(args[0].equals("attack") || args[0].equals("defense") )) {
-            p.sendMessage("Укажите команду в правильном формате!(attack, defense)");
+            p.sendMessage(ChatColor.DARK_RED + "Укажите команду в правильном формате!(attack, defense)");
             return false;
         }
 

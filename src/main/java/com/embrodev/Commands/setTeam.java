@@ -38,19 +38,19 @@ public class setTeam implements CommandExecutor {
 
         if (target == null) {
             //Проверка на валидность ника
-            p.sendMessage("Данного игрока не существует");
+            p.sendMessage(ChatColor.DARK_RED + "Данного игрока не существует");
             return false;
         }
 
         //Проверки на синтаксис
         if (args.length < 1) {
-            p.sendMessage("Пожалуйста, укажите игрока и команду(attack, defense)");
+            p.sendMessage(ChatColor.DARK_RED + "Пожалуйста, укажите игрока и команду(attack, defense)");
             return false;
         } else if (args.length == 1) {
-            p.sendMessage("Пожалуйста, укажите команду(attack, defense)");
+            p.sendMessage(ChatColor.DARK_RED + "Пожалуйста, укажите команду(attack, defense)");
             return false;
         } else if (!(args1.equals("attack") || args1.equals("defense"))) {
-            p.sendMessage("Укажите команду в правильном формате!(attack, defense)");
+            p.sendMessage(ChatColor.DARK_RED + "Укажите команду в правильном формате!(attack, defense)");
             return false;
         }
 
@@ -58,14 +58,14 @@ public class setTeam implements CommandExecutor {
 
             //Проверяем нет ли игрока в списках и проверяем тип команды
             if (args1.equals("attack") && !attack.contains(target) && !defense.contains(target)) {
-                setPlayerTeam(target, "attack", ChatColor.RED, attack);
+                setPlayerTeam(target, "attack", ChatColor.DARK_RED, attack);
 
             //Проверяем нет ли игрока в списках и проверяем тип команды
             } else if (args1.equals("defense") && !attack.contains(target) && !defense.contains(target)) {
-                setPlayerTeam(target, "defense", ChatColor.BLUE, defense);
+                setPlayerTeam(target, "defense", ChatColor.DARK_BLUE, defense);
 
             } else {
-                p.sendMessage(ChatColor.RED + "Данный игрок уже состоит в команде!");
+                p.sendMessage(ChatColor.DARK_RED + "Данный игрок уже состоит в команде!");
             }
         }
 
@@ -88,7 +88,7 @@ public class setTeam implements CommandExecutor {
         team.addEntry(player.getName());
         team.setColor(color);
         updateConfigWithTeams();
-        Bukkit.broadcastMessage(ChatColor.GOLD + "Игрок " + player.getName() + " добавлен в команду " + teamName);
+        Bukkit.broadcastMessage(ChatColor.GREEN + "Игрок " + player.getName() + " добавлен в команду " + teamName);
 
     }
 }

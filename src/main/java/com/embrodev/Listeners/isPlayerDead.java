@@ -36,7 +36,7 @@ public class isPlayerDead implements Listener {
             war_dict.replace(sumonnerUUID, war_dict.get(sumonnerUUID) - 1);
             //хз добавил для удобства
             if (war_dict.get(sumonnerUUID) > 0){
-                Bukkit.broadcastMessage(ChatColor.DARK_AQUA +"У "+ sumonner.getName() + " осталось "+war_dict.get(sumonnerUUID) + " жизней");
+                Bukkit.broadcastMessage(ChatColor.GOLD +"У "+ sumonner.getName() + " осталось "+war_dict.get(sumonnerUUID) + " жизней");
             }
 
             //Если жизни закончились

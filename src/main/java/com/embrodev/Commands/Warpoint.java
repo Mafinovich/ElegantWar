@@ -1,6 +1,7 @@
 package com.embrodev.Commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -40,13 +41,13 @@ public class Warpoint implements CommandExecutor {
 
         //Проверки на синтаксис
         if (args.length < 1){
-            p.sendMessage("Укажите количество респавнов и команду.");
+            p.sendMessage(ChatColor.DARK_RED + "Укажите количество респавнов и команду.");
             return false;
         } else if (args.length == 1) {
-            p.sendMessage("Укажите команду(attack, defense)");
+            p.sendMessage(ChatColor.DARK_RED + "Укажите команду(attack, defense)");
             return false;
         } else if (!(args1.equals("attack") || args1.equals("defense") )) {
-            p.sendMessage("Укажите команду в правильном формате!(attack, defense)");
+            p.sendMessage(ChatColor.DARK_RED + "Укажите команду в правильном формате!(attack, defense)");
             return false;
         }
         //Назначение варпоинта для атаки
@@ -66,15 +67,15 @@ public class Warpoint implements CommandExecutor {
                             target.teleport(p.getLocation());
                             //Замена точки спавна всем участнкиам команды
                             target.setRespawnLocation(loc, true);
-                            target.sendMessage("Варпоинт команды атакуюших установлен!");
+                            target.sendMessage(ChatColor.AQUA + "Варпоинт команды атакуюших установлен!");
                         } else{
-                            p.sendMessage("Введите количество респавнов больше двух");
+                            p.sendMessage(ChatColor.DARK_RED + "Введите количество респавнов больше двух");
                         }
                     }
                 } else{
                     //Если игрок не в сети удаляем из списка участников команды
                     attack.remove(target);
-                    p.sendMessage("Участник " + target.getName() + " был удален из команды атакующих, поскольку не в сети");
+                    p.sendMessage(ChatColor.GREEN + "Участник " + target.getName() + " был удален из команды атакующих, поскольку не в сети");
                 }
             }
           //Назначение варпоинта для защиты
@@ -95,15 +96,15 @@ public class Warpoint implements CommandExecutor {
                             target.teleport(p.getLocation());
                             //Замена точки спавна всем участнкиам команды
                             target.setRespawnLocation(loc, true);
-                            target.sendMessage("Варпоинт команды защитников установлен!");
+                            target.sendMessage(ChatColor.AQUA + "Варпоинт команды защитников установлен!");
                         } else{
-                            p.sendMessage("Введите количество респавнов больше двух");
+                            p.sendMessage(ChatColor.DARK_RED + "Введите количество респавнов больше двух");
                         }
                     }
                 } else{
                     //Если игрок не в сети удаляем из списка участников команды
                     defense.remove(targetOffline.getName());
-                    p.sendMessage("Участник " + targetName + " был удален из команды атакующих, поскольку не в сети");
+                    p.sendMessage(ChatColor.GREEN + "Участник " + targetName + " был удален из команды атакующих, поскольку не в сети");
                 }
             }
         }

@@ -42,13 +42,13 @@ public class setTactic implements CommandExecutor {
 
         // Проверка аргументов
         if (args.length < 1) {
-            player.sendMessage("Пожалуйста, укажите тактику");
+            player.sendMessage(ChatColor.DARK_RED + "Пожалуйста, укажите тактику");
             player.sendMessage("Список существующих тактик: \n blitzkrieg - Скорость II \n defense - Сопротивление II \n offensive - Сила I, Скорость I \n operational_interaction - Скорость I, Сопротивление I");
             return false;
         }
         if (player.getName().equals(attack_commander)) {
             if (currentCount >= MAX_TACTICS) {
-                player.sendMessage("Вы достигли максимального лимита выбора тактики (" + MAX_TACTICS + ")!");
+                player.sendMessage(ChatColor.DARK_RED + "Вы достигли максимального лимита выбора тактики (" + MAX_TACTICS + ")!");
             } else {
                 // Вызов метода установки тактики
                 for (String targetName : attack) {
@@ -56,13 +56,13 @@ public class setTactic implements CommandExecutor {
                     if(targetOffline.isOnline()) {
                         Player target = Bukkit.getPlayer(targetOffline.getName());
                         setTactic(target, tactic);
-                        setTeamTactic("defense", tactic);
+                        setTeamTactic("attack", tactic);
                     }
                 }
             }
         } else if (player.getName().equals(defense_commander)) {
             if (currentCount >= MAX_TACTICS) {
-                player.sendMessage("Вы достигли максимального лимита выбора тактики (" + MAX_TACTICS + ")!");
+                player.sendMessage(ChatColor.DARK_RED + "Вы достигли максимального лимита выбора тактики (" + MAX_TACTICS + ")!");
             } else {
                 for (String targetName : defense) {
                     OfflinePlayer targetOffline = Bukkit.getOfflinePlayer(targetName);
@@ -74,7 +74,7 @@ public class setTactic implements CommandExecutor {
                 }
             }
         } else {
-            player.sendMessage("Вы не являетесь командиром!");
+            player.sendMessage(ChatColor.DARK_RED + "Вы не являетесь командиром!");
             return false;
         }
         //счётчик использований + 1
@@ -108,7 +108,7 @@ public class setTactic implements CommandExecutor {
                 player.sendMessage("Тактика operational_interaction установлена!");
                 break;
             default:
-                player.sendMessage("Неверная тактика!");
+                player.sendMessage(ChatColor.DARK_RED + "Неверная тактика!");
                 player.sendMessage("Список существующих тактик: \n blitzkrieg - Скорость II \n defense - Сопротивление II \n offensive - Сила I, Скорость I \n operational_interaction - Скорость I, Сопротивление I");
                 break;
         }

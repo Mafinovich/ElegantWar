@@ -36,32 +36,33 @@ public class removeTeam implements CommandExecutor {
         //Проверка на синтаксис
         if(p.hasPermission("elegantwar.removeteam")) {
             if(args.length < 1) {
-                p.sendMessage("Укажите ник игрока или команду");
+                p.sendMessage(ChatColor.DARK_RED + "Укажите ник игрока или команду");
                 return false;
             }
             if(args[0].equals("attack")){
                 removePlayerTeam("attack", attack, true);
 
-                p.sendMessage("Команда атакующих была удалена");
+                p.sendMessage(ChatColor.GREEN + "Команда атакующих была удалена");
             } else if (args[0].equals("defense")) {
                 removePlayerTeam("defense", defense, true);
 
-                p.sendMessage("Команда защиты была удалена");
+                p.sendMessage(ChatColor.GREEN + "Команда защиты была удалена");
             } else {
                 //Если игрок найден в списке атакующих удаляем его
                 if (attack.contains(targetName)) {
                     removePlayerTeam("attack", attack, false);
 
-                    p.sendMessage("Игрок " + targetName + " удален из команды атакующих");
+                    p.sendMessage(ChatColor.GREEN + "Игрок " + targetName + " удален из команды атакующих");
                     //Если игрок найден в списке защиты тоже удаляем
                 } else if (defense.contains(targetName)) {
                     removePlayerTeam("defense", defense, false);
 
-                    p.sendMessage("Игрок " + targetName + " удален из команды защиты");
+                    p.sendMessage(ChatColor.GREEN + "Игрок " + targetName + " удален из команды защиты");
+
 
                     //Если игрока нет в списках выдаем ошибку
                 } else {
-                    p.sendMessage(ChatColor.RED + "Игрок не существует или не состоит в команде");
+                    p.sendMessage(ChatColor.DARK_RED +  "Игрок не существует или не состоит в команде");
                     return false;
                 }
             }
