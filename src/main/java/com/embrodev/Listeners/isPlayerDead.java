@@ -38,12 +38,15 @@ public class isPlayerDead implements Listener {
             if (war_dict.get(sumonnerUUID) > 0){
                 Bukkit.broadcastMessage(ChatColor.GOLD +"У "+ sumonner.getName() + " осталось "+war_dict.get(sumonnerUUID) + " жизней");
             }
+            event.setKeepInventory(true);
+            event.setKeepLevel(true);
+            event.getDrops().clear();
 
             //Если жизни закончились
             if (war_dict.get(sumonnerUUID) <= 0) {
                 //Назначаем спавнпоинт по сохраненному значению перед установкой варпоинта
                 sumonner.setRespawnLocation(spawnpoint_dict.get(sumonnerUUID), true);
-                Bukkit.broadcastMessage(ChatColor.GOLD + sumonner.getName() + " выбывает из команды и покидает битву!");
+                Bukkit.broadcastMessage(ChatColor.GOLD + sumonner.getName() + " покидает битву!");
                 //Удаляем участника из команды
                 war_dict.remove(sumonnerUUID);
             }

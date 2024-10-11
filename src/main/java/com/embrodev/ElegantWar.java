@@ -2,6 +2,7 @@ package com.embrodev;
 
 import com.embrodev.Commands.*;
 import com.embrodev.Completers.*;
+import com.embrodev.Listeners.RegenerationListener;
 import com.embrodev.Listeners.isPlayerDead;
 import com.embrodev.Managers.ConfigManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,6 +30,7 @@ public final class ElegantWar extends JavaPlugin {
         this.getCommand("setcommander").setExecutor(new setCommander());
         this.getCommand("listcommander").setExecutor(new listCommander());
         this.getCommand("elegantwar").setExecutor(new MainCommand());
+        this.getCommand("help").setExecutor(new Help());
 
         //TabCompleters
         this.getCommand("settactic").setTabCompleter(new setTacticCompleter());
@@ -40,6 +42,7 @@ public final class ElegantWar extends JavaPlugin {
 
         //Events
         getServer().getPluginManager().registerEvents(new isPlayerDead(), this);
+        getServer().getPluginManager().registerEvents(new RegenerationListener(), this);
 
     }
 

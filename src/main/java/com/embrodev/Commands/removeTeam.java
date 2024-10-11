@@ -4,6 +4,7 @@ import com.embrodev.ElegantWar;
 import com.embrodev.Managers.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,7 +21,8 @@ import static com.embrodev.Managers.ConfigManager.updateConfigWithTeams;
 
 public class removeTeam implements CommandExecutor {
     private Scoreboard scoreboard;
-    private Player target;
+    private OfflinePlayer target;
+    private String targetName;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -28,10 +30,7 @@ public class removeTeam implements CommandExecutor {
         ConfigManager configManager = plugin.getConfigManager();
 
         Player p = (Player) sender;
-        target = Bukkit.getPlayerExact(args[0]);
-        String targetName = target.getName();
         scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
-
 
         //Проверка на синтаксис
         if(p.hasPermission("elegantwar.removeteam")) {
@@ -48,6 +47,15 @@ public class removeTeam implements CommandExecutor {
 
                 p.sendMessage(ChatColor.GREEN + "Команда защиты была удалена");
             } else {
+                target = Bukkit.getOfflinePlayer(args[0]);
+                String targetName = target.getName();
+
+                //Проверка на null
+                if (target == null || !target.hasPlayedBefore()) {
+                    p.sendMessage(ChatColor.DARK_RED + "Игрок не найден или никогда не заходил на сервер.");
+                    return false;
+                }
+
                 //Если игрок найден в списке атакующих удаляем его
                 if (attack.contains(targetName)) {
                     removePlayerTeam("attack", attack, false);
@@ -85,8 +93,8 @@ public class removeTeam implements CommandExecutor {
             }
             teamList.clear();
         } else{
-            team.removeEntry(target.getName());
-            teamList.remove(target);
+            team.removeEntry(targetName);
+            teamList.remove(targetName);
         }
         updateConfigWithTeams();
     }

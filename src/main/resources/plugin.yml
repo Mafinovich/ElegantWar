@@ -41,3 +41,6 @@ commands:
   removeteam:
     aliases: rteam
     usage: /removeteam <player>
+
+  help:
+    usage: /help
